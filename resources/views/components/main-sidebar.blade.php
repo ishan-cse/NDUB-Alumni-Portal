@@ -39,7 +39,7 @@
                 <a class="nav-link" href="{{ url('dashboard') }}">
                     <i class="nav-icon fas fa-th"></i>
                     <p>
-                        Dashboardd
+                        Dashboard
                     </p>
                 </a>
                 </li>
