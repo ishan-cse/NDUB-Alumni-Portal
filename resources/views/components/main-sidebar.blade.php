@@ -49,6 +49,15 @@
                 @if(Auth::user()->role_id == '3')
 
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('student_exit_survey.add') }}">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Student Exit Survey
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('add_peo_po') }}">
                         <i class="nav-icon fas fa-th"></i>
                         <p>

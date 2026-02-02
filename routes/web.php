@@ -75,7 +75,7 @@ Route::middleware(['auth', 'verified', 'student'])->group(function () {
     Route::post('dashboard/admin/add/peo_po/submit', [AdminController::class, 'submitPeoPO'])->name('submit_peo_po');
 
     //Student Exit Survey
-    Route::get('dashboard/student/student-exit-survey', [StudentExitSurveyController::class, 'create']);
+    Route::get('dashboard/student/student-exit-survey', [StudentExitSurveyController::class, 'create'])->name('student_exit_survey.add');
     Route::post('dashboard/student/student-exit-survey', [StudentExitSurveyController::class, 'store'])->name('student_exit_survey.store'); 
 
 });
