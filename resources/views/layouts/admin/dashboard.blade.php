@@ -111,7 +111,7 @@
         </div>
         <!-- /.content-wrapper -->
         <footer class="main-footer">
-            <strong>Copyright &copy; 2025 NDUB <!-- <a href="#">NDUB Convocation</a>. -->|
+            <strong>Copyright &copy; <?php echo date('Y'); ?> NDUB <!-- <a href="#">NDUB Convocation</a>. -->|
             All rights reserved | Developed by NDUB IT (Software Division) 
             <div class="float-right d-none d-sm-inline-block">
             <!-- <b>Version</b> 1.0.0 -->

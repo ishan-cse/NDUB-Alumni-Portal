@@ -35,155 +35,134 @@ class StudentExitSurveyController extends Controller{
     }
 
     /**
-     * Store survey data
+     * Store Student Exit Survey data
      */
     public function store(Request $request)
     {
-        // ================= VALIDATION =================
-        $request->validate([
+        // ---------------- VALIDATION ----------------
+        $rules = [];
+
+        // a1–a10
+        for ($i = 1; $i <= 10; $i++) {
+            $rules['a'.$i] = 'required|integer|min:1|max:5';
+        }
+
+        // b1–b4
+        for ($i = 1; $i <= 4; $i++) {
+            $rules['b'.$i] = 'required|integer|min:1|max:5';
+        }
+
+        // c1–c7
+        for ($i = 1; $i <= 7; $i++) {
+            $rules['c'.$i] = 'required|integer|min:1|max:5';
+        }
+
+        // d1–d5
+        for ($i = 1; $i <= 5; $i++) {
+            $rules['d'.$i] = 'required|integer|min:1|max:5';
+        }
+
+        // e1–e4
+        for ($i = 1; $i <= 4; $i++) {
+            $rules['e'.$i] = 'required|integer|min:1|max:5';
+        }
+
+        // f1–f5
+        for ($i = 1; $i <= 5; $i++) {
+            $rules['f'.$i] = 'required|integer|min:1|max:5';
+        }
+
+        // g1–g12
+        for ($i = 1; $i <= 12; $i++) {
+            $rules['g'.$i] = 'required|integer|min:1|max:5';
+        }
+
+        // Text fields
+        $rules['h1'] = 'nullable|string';
+        $rules['h2'] = 'nullable|string';
+        $rules['h3'] = 'nullable|string';
+        $rules['h4'] = 'nullable|string';
+
+        $request->validate($rules);
+
+        $loggedUser = Auth::user()->id;
+
+        //dd($request);
+
+        ExitSurvey::create([
             // Governance
-            'a1' => 'required|integer|min:1|max:5',
-            'a2' => 'required|integer|min:1|max:5',
-            'a3' => 'required|integer|min:1|max:5',
-            'a4' => 'required|integer|min:1|max:5',
-            'a5' => 'required|integer|min:1|max:5',
-            'a6' => 'required|integer|min:1|max:5',
-            'a7' => 'required|integer|min:1|max:5',
-            'a8' => 'required|integer|min:1|max:5',
-            'a9' => 'required|integer|min:1|max:5',
-            'a10'=> 'required|integer|min:1|max:5',
+            'a1'  => $request->a1,
+            'a2'  => $request->a2,
+            'a3'  => $request->a3,
+            'a4'  => $request->a4,
+            'a5'  => $request->a5,
+            'a6'  => $request->a6,
+            'a7'  => $request->a7,
+            'a8'  => $request->a8,
+            'a9'  => $request->a9,
+            'a10' => $request->a10,
 
             // Curriculum
-            'b1' => 'required|integer|min:1|max:5',
-            'b2' => 'required|integer|min:1|max:5',
-            'b3' => 'required|integer|min:1|max:5',
-            'b4' => 'required|integer|min:1|max:5',
-            'b5' => 'nullable|string',
+            'b1' => $request->b1,
+            'b2' => $request->b2,
+            'b3' => $request->b3,
+            'b4' => $request->b4,
 
             // Structures & Facilities
-            'c1' => 'required|integer|min:1|max:5',
-            'c2' => 'required|integer|min:1|max:5',
-            'c3' => 'required|integer|min:1|max:5',
-            'c4' => 'required|integer|min:1|max:5',
-            'c5' => 'required|integer|min:1|max:5',
-            'c6' => 'required|integer|min:1|max:5',
-            'c7' => 'required|integer|min:1|max:5',
+            'c1' => $request->c1,
+            'c2' => $request->c2,
+            'c3' => $request->c3,
+            'c4' => $request->c4,
+            'c5' => $request->c5,
+            'c6' => $request->c6,
+            'c7' => $request->c7,
 
             // Teaching-Learning
-            'd1' => 'required|integer|min:1|max:5',
-            'd2' => 'required|integer|min:1|max:5',
-            'd3' => 'required|integer|min:1|max:5',
-            'd4' => 'required|integer|min:1|max:5',
-            'd5' => 'required|integer|min:1|max:5',
+            'd1' => $request->d1,
+            'd2' => $request->d2,
+            'd3' => $request->d3,
+            'd4' => $request->d4,
+            'd5' => $request->d5,
 
             // Learning Assessment
-            'e1' => 'required|integer|min:1|max:5',
-            'e2' => 'required|integer|min:1|max:5',
-            'e3' => 'required|integer|min:1|max:5',
-            'e4' => 'required|integer|min:1|max:5',
-            'e5' => 'nullable|string',
-            'e6' => 'required|integer|min:1|max:5',
-            'e7' => 'required|integer|min:1|max:5',
-            'e8' => 'required|integer|min:1|max:5',
-            'e9' => 'required|integer|min:1|max:5',
-            'e10'=> 'required|integer|min:1|max:5',
+            'e1' => $request->e1,
+            'e2' => $request->e2,
+            'e3' => $request->e3,
+            'e4' => $request->e4,
 
-            // PLOs
-            'f1'  => 'required|integer|min:1|max:5',
-            'f2'  => 'required|integer|min:1|max:5',
-            'f3'  => 'required|integer|min:1|max:5',
-            'f4'  => 'required|integer|min:1|max:5',
-            'f5'  => 'required|integer|min:1|max:5',
-            'f6'  => 'required|integer|min:1|max:5',
-            'f7'  => 'required|integer|min:1|max:5',
-            'f8'  => 'required|integer|min:1|max:5',
-            'f9'  => 'required|integer|min:1|max:5',
-            'f10' => 'required|integer|min:1|max:5',
-            'f11' => 'required|integer|min:1|max:5',
-            'f12' => 'required|integer|min:1|max:5',
+            // Student Support Services
+            'f1' => $request->f1,
+            'f2' => $request->f2,
+            'f3' => $request->f3,
+            'f4' => $request->f4,
+            'f5' => $request->f5,
 
-            'f13' => 'nullable|string',
-            'f14' => 'nullable|string',
-            'f15' => 'nullable|string',
-            'f16' => 'nullable|string',
-            'f17' => 'nullable|string',
+            // Engineer’s Attributes (PLOs)
+            'g1'  => $request->g1,
+            'g2'  => $request->g2,
+            'g3'  => $request->g3,
+            'g4'  => $request->g4,
+            'g5'  => $request->g5,
+            'g6'  => $request->g6,
+            'g7'  => $request->g7,
+            'g8'  => $request->g8,
+            'g9'  => $request->g9,
+            'g10' => $request->g10,
+            'g11' => $request->g11,
+            'g12' => $request->g12,
+
+            // Feedback
+            'h1' => $request->h1,
+            'h2' => $request->h2,
+            'h3' => $request->h3,
+            'h4' => $request->h4,
+
+            // Meta
+            'created_by'=>$loggedUser,
+            'created_at'=>Carbon::now()->toDateTimeString(),
         ]);
 
-        try {
-            // ================= STORE DATA =================
-            ExitSurvey::create([
-                // Governance
-                'a1' => $request->a1,
-                'a2' => $request->a2,
-                'a3' => $request->a3,
-                'a4' => $request->a4,
-                'a5' => $request->a5,
-                'a6' => $request->a6,
-                'a7' => $request->a7,
-                'a8' => $request->a8,
-                'a9' => $request->a9,
-                'a10'=> $request->a10,
-
-                // Curriculum
-                'b1' => $request->b1,
-                'b2' => $request->b2,
-                'b3' => $request->b3,
-                'b4' => $request->b4,
-                'b5' => $request->b5,
-
-                // Structures
-                'c1' => $request->c1,
-                'c2' => $request->c2,
-                'c3' => $request->c3,
-                'c4' => $request->c4,
-                'c5' => $request->c5,
-                'c6' => $request->c6,
-                'c7' => $request->c7,
-
-                // Teaching
-                'd1' => $request->d1,
-                'd2' => $request->d2,
-                'd3' => $request->d3,
-                'd4' => $request->d4,
-                'd5' => $request->d5,
-
-                // Assessment
-                'e1' => $request->e1,
-                'e2' => $request->e2,
-                'e3' => $request->e3,
-                'e4' => $request->e4,
-                'e5' => $request->e5,
-                'e6' => $request->e6,
-                'e7' => $request->e7,
-                'e8' => $request->e8,
-                'e9' => $request->e9,
-                'e10'=> $request->e10,
-
-                // PLO
-                'f1'  => $request->f1,
-                'f2'  => $request->f2,
-                'f3'  => $request->f3,
-                'f4'  => $request->f4,
-                'f5'  => $request->f5,
-                'f6'  => $request->f6,
-                'f7'  => $request->f7,
-                'f8'  => $request->f8,
-                'f9'  => $request->f9,
-                'f10' => $request->f10,
-                'f11' => $request->f11,
-                'f12' => $request->f12,
-
-                'f13' => $request->f13,
-                'f14' => $request->f14,
-                'f15' => $request->f15,
-                'f16' => $request->f16,
-                'f17' => $request->f17,
-            ]);
-
-            return redirect()->back()->with('success', 'Student Exit Survey submitted successfully.');
-
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Something went wrong! Please try again.');
-        }
+        return redirect()->back()
+            ->with('success', 'Student Exit Survey submitted successfully.');
     }
 }
