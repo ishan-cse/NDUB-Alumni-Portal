@@ -22,6 +22,10 @@
 }
 </style>
 
+@php 
+    if($exitSurveySubmissionStatus==0){
+@endphp
+
 @php
 $scale=[
     5=>'Strongly Agree',
@@ -165,4 +169,28 @@ function radioField($name,$label,$scale){
 
 </div>
 </form>
+
+@php
+    }elseif($exitSurveySubmissionStatus=1){
+@endphp
+
+<div class="card shadow-sm border-left-info mb-4">
+    <div class="card-body text-center">
+        <i class="fas fa-check-circle fa-3x text-info mb-3"></i>
+
+        <h4 class="text-info font-weight-bold mb-2">
+            Exit Survey Already Submitted
+        </h4>
+
+        <p class="text-muted mb-0">
+            You have already submitted the Student Exit Survey form.
+            Thank you for sharing your valuable feedback.
+        </p>
+    </div>
+</div>
+
+@php
+    }
+@endphp
+
 @endsection

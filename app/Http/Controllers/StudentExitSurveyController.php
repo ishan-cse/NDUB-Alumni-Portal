@@ -29,16 +29,17 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Excel;
 
 class StudentExitSurveyController extends Controller{
-    public function create()
-    {
-        return view('admin.student.student_exit_survey');
+    public function create(){
+        $loggedUser = Auth::user()->id;
+        $graduateListId = User::where('id', $loggedUser)->value('graduate_lists_id');
+        $exitSurveySubmissionStatus = GraduateList::where('id', $graduateListId)->value('exit_survey_submission_status');
+        return view('admin.student.student_exit_survey', compact('exitSurveySubmissionStatus'));
     }
 
     /**
      * Store Student Exit Survey data
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         // ---------------- VALIDATION ----------------
         $rules = [];
 
@@ -160,6 +161,14 @@ class StudentExitSurveyController extends Controller{
             // Meta
             'created_by'=>$loggedUser,
             'created_at'=>Carbon::now()->toDateTimeString(),
+        ]);
+
+        $loggedUser = Auth::user()->id;
+        $graduateListId = User::where('id', $loggedUser)->value('graduate_lists_id');
+        $update = GraduateList::where('id', $graduateListId)->update([
+            'exit_survey_submission_status'=>1,
+            'updated_by'=>$loggedUser,
+            'updated_at'=>Carbon::now()->toDateTimeString(),
         ]);
 
         return redirect()->back()
