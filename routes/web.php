@@ -36,7 +36,9 @@ Artisan::call('serve');
 return "Cleared!";
 });
 
-
+Route::get('/migrate', function () {
+    Artisan::call('migrate');
+});
 
 Route::get('/', function () {
     return view('welcome');
