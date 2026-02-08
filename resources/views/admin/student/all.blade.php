@@ -136,6 +136,15 @@ Swal.fire({
                                         <a>
                                 @php
                                     }
+                                    if($user->exit_survey_submission_status=='1'){
+                                @endphp
+                                        <a class="btn btn-sm btn-orange text-white font-weight-bold mt-2" style="background-color: #422cc3;" title="This student submitted exit survey form">
+                                        @php
+                                            echo 'Exit Survey Submitted';
+                                        @endphp
+                                        <a>
+                                @php
+                                    }
                                 @endphp
                             </td>
                             <td>
